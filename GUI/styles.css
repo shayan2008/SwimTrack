@@ -1,0 +1,234 @@
+/* ========= High-Contrast Dark Blue: force surfaces + bright text ========= */
+.root {
+    /* tokens tuned for legibility */
+    -app-bg: #081226;          /* window background (deep navy) */
+    -app-surface: #0f2147;     /* cards/panels */
+    -app-surface-2: #153062;   /* headers/rails */
+    -app-border: rgba(255,255,255,0.30);
+
+    -app-accent: #64b5ff;      /* bright blue */
+    -app-accent-2: #d4e9ff;    /* very light blue */
+    -app-ok: #66d17a;
+
+    -app-text: #ffffff;        /* full white */
+    -app-text-dim: #edf3ff;    /* almost white */
+
+    -fx-font-size: 15px;
+    -fx-background-color: -app-bg;      /* force window navy */
+    -fx-text-fill: -app-text;
+    -fx-font-smoothing-type: gray;
+}
+
+/* --- Theme class hooks still work (picker) --- */
+.theme-ocean-hc { /* already optimal */ }
+.theme-ocean {
+    -app-bg: #0a0f1e; -app-surface:#101933; -app-surface-2:#16223e; -app-border:rgba(255,255,255,0.25);
+    -app-accent:#64b5ff; -app-accent-2:#d4e9ff; -app-text:#ffffff; -app-text-dim:#edf3ff;
+}
+.theme-sunset {
+    -app-bg:#1a0f16; -app-surface:#2a1826; -app-surface-2:#3a2233; -app-border:rgba(255,255,255,0.30);
+    -app-accent:#ff8f6f; -app-accent-2:#ffd7cb; -app-text:#ffffff; -app-text-dim:#fff4ee;
+}
+.theme-mono {
+    -app-bg:#0e0e0f; -app-surface:#1b1c20; -app-surface-2:#24262b; -app-border:rgba(255,255,255,0.30);
+    -app-accent:#8ab4f8; -app-accent-2:#dbe6ff; -app-text:#ffffff; -app-text-dim:#f7faff;
+}
+
+/* ========= HARD text color where Modena is subtle ========= */
+.label, .text, .cell, .list-cell, .tree-cell, .table-cell, .tree-table-cell,
+.table-row-cell, .tree-table-row-cell, .titled-pane > .title .text, .tooltip,
+.chart-legend, .axis, .axis .axis-label, .axis .tick, .menu-item .label,
+.tab-pane .tab-header-area .tab .tab-label, .pagination .number-button {
+    -fx-text-fill: -app-text;
+}
+.table-cell .text, .tree-table-cell .text, .list-cell .text { -fx-fill: -app-text; }
+
+/* ========= FORCE ALL COMMON SURFACES TO NAVY ========= */
+.anchor-pane, .stack-pane, .vbox, .hbox, .grid-pane {
+    -fx-background-color: transparent;  /* keep layout transparent */
+}
+.scroll-pane {            /* but make scroll containers navy */
+    -fx-background: -app-bg;
+    -fx-background-color: -app-bg;
+}
+.scroll-pane > .viewport { -fx-background-color: transparent; }
+
+.tool-bar {
+    -fx-background-color: linear-gradient(to bottom, -app-surface-2, derive(-app-surface-2, -8%));
+    -fx-padding: 6 12;
+    -fx-border-color: -app-border;
+    -fx-border-width: 0 0 1 0;
+}
+.label.title { -fx-font-size: 18px; -fx-font-weight: 900; }
+
+.leftPane, .chart, .table-view, .tree-table-view, .titled-pane > *.content {
+    -fx-background-color: -app-surface;  /* card navy */
+    -fx-background-radius: 14;
+    -fx-padding: 10;
+    -fx-border-color: -app-border;
+    -fx-border-radius: 14;
+}
+
+/* ========= TAB PANE (the “tabs under the chart”) ========= */
+.tab-pane {
+    -fx-background-color: -app-surface;      /* content background navy */
+    -fx-border-color: -app-border;
+    -fx-border-radius: 12;
+}
+.tab-pane > .tab-header-area {
+    -fx-background-color: -app-surface-2;    /* header rail navy */
+    -fx-border-color: -app-border;
+    -fx-border-width: 0 0 1 0;
+}
+.tab-pane .tab-header-area .headers-region .tab {
+    -fx-background-insets: 0;
+    -fx-background-radius: 8 8 0 0;
+    -fx-background-color: transparent;
+}
+.tab-pane .tab-header-area .headers-region .tab:selected {
+    -fx-background-color: -app-surface;
+    -fx-border-color: -app-border;
+    -fx-border-width: 1 1 0 1;
+    -fx-border-radius: 8 8 0 0;
+}
+.tab-pane .tab-header-area .tab .tab-label {
+    -fx-font-weight: 800;
+    -fx-text-fill: -app-text;
+}
+.tab-pane .tab-content-area {
+    -fx-background-color: -app-surface;
+    -fx-background-insets: 0;
+    -fx-padding: 10;
+}
+
+/* ========= Inputs & Buttons ========= */
+.button {
+    -fx-background-color: -app-accent;
+    -fx-text-fill: #001126;
+    -fx-background-radius: 9;
+    -fx-font-weight: 900;
+    -fx-padding: 7 14;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.4), 12, 0.25, 0, 1);
+    -fx-border-color: rgba(0,0,0,0.45);
+    -fx-border-width: 0.8;
+    -fx-border-radius: 9;
+}
+.button:hover   { -fx-background-color: derive(-app-accent, -10%); }
+.button:pressed { -fx-background-color: derive(-app-accent, -20%); }
+
+.text-field, .combo-box-base, .date-picker, .pagination {
+    -fx-background-color: -app-surface;
+    -fx-background-radius: 10;
+    -fx-border-color: -app-border;
+    -fx-border-radius: 10;
+    -fx-padding: 7 10;
+    -fx-text-fill: -app-text;
+}
+.combo-box .list-cell { -fx-text-fill: -app-text; }
+.combo-box-popup .list-view { -fx-background-color: -app-surface; -fx-border-color: -app-border; }
+
+/* Hyperlinks (names) */
+.hyperlink, .name-link { -fx-text-fill: -app-accent; -fx-underline: true; -fx-font-weight: 900; }
+.hyperlink:visited, .name-link:visited { -fx-text-fill: -app-accent; }
+
+/* ========= TitledPane ========= */
+.titled-pane > .title {
+    -fx-background-color: -app-surface-2;
+    -fx-background-radius: 14 14 0 0;
+    -fx-padding: 9 12;
+    -fx-border-color: -app-border;
+    -fx-border-width: 0 0 1 0;
+}
+
+/* ========= Tables (heavy contrast + stripes) ========= */
+.table-view .column-header-background {
+    -fx-background-color: -app-surface-2;
+    -fx-background-radius: 14 14 0 0;
+    -fx-border-color: -app-border;
+    -fx-border-width: 0 0 1 0;
+}
+.table-view .column-header .label { -fx-font-weight: 900; -fx-text-fill: -app-text; }
+
+.table-row-cell:filled:selected, .table-cell:filled:selected {
+    -fx-background-color: rgba(100,181,255,0.50);
+    -fx-text-fill: #001126;
+}
+.table-row-cell:odd  { -fx-background-color: rgba(255,255,255,0.12); }
+.table-row-cell:even { -fx-background-color: rgba(0,0,0,0.22); }
+.table-row-cell { -fx-border-color: rgba(255,255,255,0.16); -fx-border-width: 0 0 1px 0; }
+
+/* TreeTable same treatment */
+.tree-table-view .column-header-background { -fx-background-color: -app-surface-2; }
+.tree-table-row-cell:filled:selected, .tree-table-cell:filled:selected {
+    -fx-background-color: rgba(100,181,255,0.50);
+    -fx-text-fill: #001126;
+}
+.tree-table-row-cell { -fx-border-color: rgba(255,255,255,0.16); -fx-border-width: 0 0 1px 0; }
+
+/* PB highlight ribbon */
+.pb-cell {
+    -fx-background-color: linear-gradient(to right, rgba(100,181,255,0.70), rgba(100,181,255,1.0));
+    -fx-text-fill: #001126;
+    -fx-font-weight: 900;
+}
+
+/* ========= Charts ========= */
+.chart-plot-background {
+    -fx-background-color: derive(-app-surface, 14%);
+    -fx-background-radius: 12;
+    -fx-border-color: -app-border;
+    -fx-border-radius: 12;
+}
+.chart-legend { -fx-text-fill: -app-text; }
+.axis { -fx-tick-label-fill: -app-text; -fx-text-fill: -app-text; }
+.axis .axis-label { -fx-text-fill: -app-text; -fx-font-weight: 800; }
+.chart-horizontal-grid-lines, .chart-vertical-grid-lines { -fx-stroke: rgba(255,255,255,0.28); }
+
+/* series colors */
+.default-color0.chart-bar            { -fx-bar-fill: -app-accent; }
+.default-color1.chart-bar            { -fx-bar-fill: -app-accent-2; }
+.default-color0.chart-series-line    { -fx-stroke: -app-accent; }
+.default-color1.chart-series-line    { -fx-stroke: -app-accent-2; }
+.default-color0.chart-symbol         { -fx-background-color: -app-accent; }
+.default-color1.chart-symbol         { -fx-background-color: -app-accent-2; }
+.pie-chart .default-color0.chart-pie { -fx-pie-color: -app-accent; }
+.pie-chart .default-color1.chart-pie { -fx-pie-color: -app-accent-2; }
+
+/* ========= Pagination ========= */
+.pagination .control-box { -fx-background-color: transparent; }
+.pagination .number-button, .pagination .increment-arrow-button, .pagination .decrement-arrow-button {
+    -fx-background-color: -app-surface-2;
+    -fx-text-fill: -app-text;
+    -fx-background-radius: 10;
+    -fx-border-color: -app-border;
+}
+.pagination .number-button:selected {
+    -fx-background-color: -app-accent;
+    -fx-text-fill: #001126;
+    -fx-font-weight: 900;
+}
+
+/* ========= Tooltip ========= */
+.tooltip {
+    -fx-background-color: -app-surface-2;
+    -fx-text-fill: -app-text;
+    -fx-background-radius: 10;
+    -fx-padding: 7 10;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.55), 14, 0.3, 0, 2);
+    -fx-border-color: -app-border;
+    -fx-border-radius: 10;
+}
+
+/* ========= SplitPane & Separators ========= */
+.separator .line { -fx-border-color: -app-border; -fx-border-width: 0 0 1 0; }
+.split-pane:horizontal > .split-pane-divider,
+.split-pane:vertical   > .split-pane-divider { -fx-background-color: -app-border; }
+
+/* ========= Scrollbars (visible) ========= */
+.scroll-bar .track { -fx-background-color: rgba(255,255,255,0.18); -fx-background-radius: 6; }
+.scroll-bar .thumb {
+    -fx-background-color: rgba(255,255,255,0.85);
+    -fx-background-insets: 0;
+    -fx-background-radius: 6;
+}
+.scroll-bar .thumb:hover { -fx-background-color: #ffffff; }

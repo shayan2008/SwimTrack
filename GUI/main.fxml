@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.chart.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.example.gui_optionalassignment1_doroudianishayan.MainController">
+
+    <top>
+        <ToolBar prefHeight="40">
+            <Label text="SwimDesk" styleClass="title"/>
+            <Pane HBox.hgrow="ALWAYS"/>
+            <TextField fx:id="globalSearchField" promptText="Search swimmer or meet..."/>
+            <Separator orientation="VERTICAL"/>
+            <Label text="Theme:"/>
+            <ComboBox fx:id="themePicker" prefWidth="140"/>
+            <Separator orientation="VERTICAL"/>
+            <Button text="Dashboard" onAction="#goDashboard"/>
+            <Button text="Swimmers" onAction="#goSwimmers"/>
+            <Button text="Analytics" onAction="#goAnalytics"/>
+            <Separator orientation="VERTICAL"/>
+            <Button text="Add Swimmer" onAction="#addSwimmer"/>
+            <Button text="Import CSV" onAction="#importCsv"/>
+            <Button text="Export CSV" onAction="#exportCsv"/>
+        </ToolBar>
+    </top>
+
+    <left>
+        <VBox spacing="8" styleClass="leftPane">
+            <padding><Insets top="12" right="12" bottom="12" left="12"/></padding>
+            <Label text="Filters" styleClass="sectionHeader"/>
+            <Label text="Event"/>
+            <ComboBox fx:id="eventCombo"/>
+            <Label text="From date"/>
+            <DatePicker fx:id="fromDate"/>
+            <Label text="To date"/>
+            <DatePicker fx:id="toDate"/>
+            <Pane VBox.vgrow="ALWAYS"/>
+            <Label text="Tips:" styleClass="muted"/>
+            <Label text="Right-click a swimmer for actions" styleClass="muted"/>
+            <Label text="Double-click to add a result" styleClass="muted"/>
+        </VBox>
+    </left>
+
+    <!-- CENTER wrapped in ScrollPane so nothing overflows the frame -->
+    <center>
+        <ScrollPane fitToWidth="true" fitToHeight="true" pannable="false" hbarPolicy="AS_NEEDED" vbarPolicy="AS_NEEDED">
+            <StackPane fx:id="contentStack" maxWidth="Infinity" maxHeight="Infinity">
+                <!-- DASHBOARD -->
+                <AnchorPane fx:id="dashboardView">
+                    <VBox spacing="12" maxWidth="Infinity">
+                        <padding><Insets top="16" right="16" bottom="16" left="16"/></padding>
+                        <Label text="Dashboard" styleClass="sectionHeader"/>
+                        <HBox spacing="12">
+                            <TitledPane text="Summary" expanded="true">
+                                <content>
+                                    <VBox spacing="8">
+                                        <padding><Insets top="8" right="8" bottom="8" left="8"/></padding>
+                                        <Label text="Add swimmers and results, or import CSV to begin."/>
+                                        <Label text="Use Analytics to see PB trends and top-5 per event."/>
+                                        <Label text="Filters on the left refine tables and charts live."/>
+                                    </VBox>
+                                </content>
+                            </TitledPane>
+                            <TitledPane text="Leaderboard (selected event)" expanded="true">
+                                <content>
+                                    <BarChart fx:id="topBarChart" prefWidth="600">
+                                        <xAxis><CategoryAxis label="Swimmer"/></xAxis>
+                                        <yAxis><NumberAxis label="Seconds"/></yAxis>
+                                    </BarChart>
+                                </content>
+                            </TitledPane>
+                        </HBox>
+                    </VBox>
+                </AnchorPane>
+
+                <!-- SWIMMERS -->
+                <AnchorPane fx:id="swimmersView" visible="false">
+                    <VBox spacing="10" maxWidth="Infinity">
+                        <padding><Insets top="12" right="12" bottom="12" left="12"/></padding>
+                        <Label text="Swimmers" styleClass="sectionHeader"/>
+                        <SplitPane dividerPositions="0.48">
+                            <VBox spacing="8">
+                                <TableView fx:id="swimmersTable" prefHeight="320">
+                                    <columns>
+                                        <TableColumn fx:id="colName" text="Name" prefWidth="220"/>
+                                        <TableColumn fx:id="colTeam" text="Team" prefWidth="100"/>
+                                        <TableColumn fx:id="colGender" text="Gender" prefWidth="80"/>
+                                        <TableColumn fx:id="colDob" text="DOB" prefWidth="120"/>
+                                    </columns>
+                                </TableView>
+                                <Label text="Results (paged)" styleClass="sectionHeader"/>
+                                <Pagination fx:id="resultsPagination"/>
+                            </VBox>
+
+                            <VBox spacing="8">
+                                <Label text="Selected Results" styleClass="sectionHeader"/>
+                                <TableView fx:id="resultsTable" VBox.vgrow="ALWAYS">
+                                    <columns>
+                                        <TableColumn fx:id="colEvent" text="Event" prefWidth="150"/>
+                                        <TableColumn fx:id="colTime" text="Time" prefWidth="100"/>
+                                        <TableColumn fx:id="colDate" text="Date" prefWidth="140"/>
+                                        <TableColumn fx:id="colMeet" text="Meet" prefWidth="260"/>
+                                    </columns>
+                                </TableView>
+                            </VBox>
+                        </SplitPane>
+                    </VBox>
+                </AnchorPane>
+
+                <!-- ANALYTICS -->
+                <AnchorPane fx:id="analyticsView" visible="false">
+                    <VBox spacing="12" maxWidth="Infinity">
+                        <padding><Insets top="12" right="12" bottom="12" left="12"/></padding>
+                        <Label text="Analytics" styleClass="sectionHeader"/>
+
+                        <!-- TabPane under charts (now styled navy & bright) -->
+                        <TabPane tabClosingPolicy="UNAVAILABLE">
+                            <tabs>
+                                <Tab text="Trends &amp; Breakdown">
+                                    <VBox spacing="10">
+                                        <HBox spacing="10">
+                                            <LineChart fx:id="trendLineChart" prefWidth="600">
+                                                <xAxis><CategoryAxis label="Date"/></xAxis>
+                                                <yAxis><NumberAxis label="Seconds"/></yAxis>
+                                            </LineChart>
+                                            <PieChart fx:id="eventPieChart" prefWidth="420"/>
+                                        </HBox>
+                                        <HBox spacing="10">
+                                            <ScatterChart fx:id="scatterChart" prefWidth="600">
+                                                <xAxis><NumberAxis label="Attempt #"/></xAxis>
+                                                <yAxis><NumberAxis label="Seconds"/></yAxis>
+                                            </ScatterChart>
+                                            <TreeTableView fx:id="treeTable" prefWidth="420">
+                                                <columns>
+                                                    <TreeTableColumn fx:id="treeColGroup" text="Group / Event" prefWidth="240"/>
+                                                    <TreeTableColumn fx:id="treeColValue" text="PB Time" prefWidth="180"/>
+                                                </columns>
+                                            </TreeTableView>
+                                        </HBox>
+                                    </VBox>
+                                </Tab>
+                            </tabs>
+                        </TabPane>
+
+                    </VBox>
+                </AnchorPane>
+            </StackPane>
+        </ScrollPane>
+    </center>
+</BorderPane>
