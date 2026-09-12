@@ -27,6 +27,6 @@ Written in Java with a JavaFX interface, built with Maven. This is the tool I bu
 ./mvnw clean javafx:run
 ```
 
-On Windows use `mvnw.cmd`. Java 17 or newer and Maven are required — the wrapper handles Maven if you do not have it installed.
+On Windows use `mvnw.cmd`. Java 17 or newer and Maven are required, though the wrapper handles Maven if you do not have it installed.
 
 Maintained by [Shayan Doroudiani](https://github.com/shayan2008).
